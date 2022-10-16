@@ -8,6 +8,8 @@ import { initialValue } from 'containers/Editor/constants';
 const Home: FC = () => {
   const [editorValue, setEditorValue] = useState(initialValue);
 
+  console.log();
+
   return (
     <>
       <Div className="w-screen h-screen bg-gray-300">
