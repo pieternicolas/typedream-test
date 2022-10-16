@@ -18,7 +18,7 @@ export const CHARACTER_STYLES = [
   { name: 'bold', icon: solid('bold') },
   { name: 'italic', icon: solid('italic') },
   { name: 'underline', icon: solid('underline') },
-  { name: 'code', icon: solid('code') },
+  { name: 'code', icon: solid('quote-left') },
 ] as const;
 
 export const KEYBINDINGS = {
@@ -33,7 +33,7 @@ export const KEYBINDINGS = {
       return;
     }
 
-    if (isHotkey('mod+j', event)) {
+    if (isHotkey('mod+`', event)) {
       toggleStyle(editor, 'code');
       return;
     }
