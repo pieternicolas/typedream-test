@@ -1,6 +1,9 @@
-const throttle = (cb: Function, delay: number = 1000) => {
+const throttle = <T extends any[], U>(
+  cb: (...args: T) => U,
+  delay: number = 1000
+) => {
   let shouldWait = false;
-  let waitingArgs: any;
+  let waitingArgs: T | null;
 
   const timeoutFunc = () => {
     if (waitingArgs == null) {
@@ -12,7 +15,7 @@ const throttle = (cb: Function, delay: number = 1000) => {
     }
   };
 
-  return (...args: any) => {
+  return (...args: T) => {
     if (shouldWait) {
       waitingArgs = args;
       return;
