@@ -7,6 +7,7 @@ import useEditorConfig from 'hooks/useEditorConfig';
 import useEditorSelection from 'hooks/useEditorSelection';
 
 import Toolbar from './Toolbar';
+import Div from 'components/Div';
 
 export interface EditorProps
   extends Omit<ComponentProps<typeof Slate>, 'editor' | 'children'> {}
@@ -27,15 +28,17 @@ const Editor: FC<EditorProps> = ({ value, onChange }) => {
 
   return (
     <>
-      <Slate editor={editor} value={value} onChange={handleChange}>
-        <Toolbar selection={selection} />
+      <Div className="relative">
+        <Slate editor={editor} value={value} onChange={handleChange}>
+          <Toolbar selection={selection} />
 
-        <Editable
-          onKeyDown={onKeyDown}
-          renderElement={renderElement}
-          renderLeaf={renderLeaf}
-        />
-      </Slate>
+          <Editable
+            onKeyDown={onKeyDown}
+            renderElement={renderElement}
+            renderLeaf={renderLeaf}
+          />
+        </Slate>
+      </Div>
     </>
   );
 };

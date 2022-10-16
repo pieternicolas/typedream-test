@@ -36,7 +36,7 @@ const Toolbar: FC<ToolbarProps> = ({}) => {
 
   return (
     <>
-      <Div className="flex gap-4 justify-center mb-4">
+      <Div className="flex gap-4 justify-center py-4 mb-4 border-b sticky top-0 bg-white z-10">
         {PARAGRAPH_STYLES.map((item) => (
           <Button
             key={item}

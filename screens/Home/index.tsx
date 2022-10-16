@@ -15,8 +15,8 @@ const Home: FC = () => {
 
   return (
     <>
-      <Div className="w-screen h-screen bg-gray-300">
-        <Div className="container mx-auto py-10 bg-white h-full px-6 drop-shadow">
+      <Div className="w-full h-full min-h-screen bg-gray-300">
+        <Div className="container mx-auto p-6 bg-white h-full drop-shadow">
           <Editor
             value={editorValue}
             onChange={throttle((value: Descendant[]) => setEditorValue(value))}
