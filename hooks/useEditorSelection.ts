@@ -9,8 +9,6 @@ const useEditorSelection = (
 
   const setSelectionOptimized = useCallback(
     (newSelection: BaseSelection) => {
-      console.log(newSelection);
-
       if (isEqual(selection, newSelection)) {
         return;
       }

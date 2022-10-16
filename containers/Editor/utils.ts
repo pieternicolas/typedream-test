@@ -1,4 +1,4 @@
-import { Editor } from 'slate';
+import { Editor, Range, Transforms } from 'slate';
 
 export const getActiveStyles = (editor: Editor) => {
   return new Set(Object.keys(Editor.marks(editor) ?? {}));
@@ -13,3 +13,46 @@ export const toggleStyle = (editor: Editor, style: string) => {
     Editor.addMark(editor, style, true);
   }
 };
+
+export function getTextBlockStyle(editor: Editor) {
+  const selection = editor.selection;
+
+  if (selection == null) {
+    return null;
+  }
+
+  const [start, end] = Range.edges(selection);
+
+  let startTopLevelBlockIndex = start.path[0];
+  const endTopLevelBlockIndex = end.path[0];
+
+  let blockType = null;
+  while (startTopLevelBlockIndex <= endTopLevelBlockIndex) {
+    const [node]: any = Editor.node(editor, [startTopLevelBlockIndex]);
+
+    if (blockType == null) {
+      blockType = node.type;
+    } else if (blockType !== node.type) {
+      return 'multiple';
+    }
+    startTopLevelBlockIndex++;
+  }
+
+  return blockType;
+}
+
+export function toggleBlockType(editor: Editor, blockType: string) {
+  const currentBlockType = getTextBlockStyle(editor);
+  const changeTo = currentBlockType === blockType ? 'paragraph' : blockType;
+
+  Transforms.setNodes(
+    editor,
+    {
+      type: changeTo,
+    },
+    {
+      at: editor.selection as any,
+      match: (n) => Editor.isBlock(editor, n),
+    }
+  );
+}

@@ -26,7 +26,8 @@ const Editor: FC<EditorProps> = ({ value, onChange }) => {
   return (
     <>
       <Slate editor={editor} value={value} onChange={handleChange}>
-        <Toolbar />
+        <Toolbar selection={selection} />
+
         <Editable
           onKeyDown={onKeyDown}
           renderElement={renderElement}

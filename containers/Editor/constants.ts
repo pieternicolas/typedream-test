@@ -5,14 +5,21 @@ import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 
 import { toggleStyle } from './utils';
 
-export const PARAGRAPH_STYLES = ['h1', 'h2', 'h3', 'h4', 'paragraph'];
+export const PARAGRAPH_STYLES = [
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'paragraph',
+  'multiple',
+] as const;
 
 export const CHARACTER_STYLES = [
   { name: 'bold', icon: solid('bold') },
   { name: 'italic', icon: solid('italic') },
   { name: 'underline', icon: solid('underline') },
   { name: 'code', icon: solid('code') },
-];
+] as const;
 
 export const KEYBINDINGS = {
   onKeyDown: (editor: Editor, event: KeyboardEvent<HTMLDivElement>) => {
@@ -20,14 +27,17 @@ export const KEYBINDINGS = {
       toggleStyle(editor, 'bold');
       return;
     }
+
     if (isHotkey('mod+i', event)) {
       toggleStyle(editor, 'italic');
       return;
     }
-    if (isHotkey('mod+c', event)) {
+
+    if (isHotkey('mod+j', event)) {
       toggleStyle(editor, 'code');
       return;
     }
+
     if (isHotkey('mod+u', event)) {
       toggleStyle(editor, 'underline');
       return;

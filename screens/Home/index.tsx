@@ -10,8 +10,10 @@ const Home: FC = () => {
 
   return (
     <>
-      <Div className="container mx-auto py-10">
-        <Editor value={editorValue} />
+      <Div className="w-screen h-screen bg-gray-300">
+        <Div className="container mx-auto py-10 bg-white h-full px-6 drop-shadow">
+          <Editor value={editorValue} />
+        </Div>
       </Div>
     </>
   );
