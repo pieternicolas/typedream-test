@@ -1,5 +1,7 @@
 import { Editor, Range, Transforms } from 'slate';
 
+import { PARAGRAPH_STYLES } from './constants';
+
 export const getActiveStyles = (editor: Editor) => {
   return new Set(Object.keys(Editor.marks(editor) ?? {}));
 };
@@ -14,7 +16,7 @@ export const toggleStyle = (editor: Editor, style: string) => {
   }
 };
 
-export function getTextBlockStyle(editor: Editor) {
+export const getTextBlockStyle = (editor: Editor) => {
   const selection = editor.selection;
 
   if (selection == null) {
@@ -33,26 +35,50 @@ export function getTextBlockStyle(editor: Editor) {
     if (blockType == null) {
       blockType = node.type;
     } else if (blockType !== node.type) {
-      return 'multiple';
+      return PARAGRAPH_STYLES.Multiple;
     }
     startTopLevelBlockIndex++;
   }
 
   return blockType;
-}
+};
 
-export function toggleBlockType(editor: Editor, blockType: string) {
+export const toggleBlockType = (editor: Editor, blockType: string) => {
   const currentBlockType = getTextBlockStyle(editor);
-  const changeTo = currentBlockType === blockType ? 'paragraph' : blockType;
+  const changeTo =
+    currentBlockType === blockType ? PARAGRAPH_STYLES.Paragraph : blockType;
 
-  Transforms.setNodes(
-    editor,
-    {
-      type: changeTo,
-    },
-    {
-      at: editor.selection as any,
-      match: (n) => Editor.isBlock(editor, n),
+  if (changeTo === PARAGRAPH_STYLES.Section) {
+    Transforms.wrapNodes(
+      editor,
+      {
+        type: PARAGRAPH_STYLES.Section,
+        children: [],
+      },
+      {
+        at: editor.selection as any,
+        match: (n) => Editor.isBlock(editor, n),
+      }
+    );
+  } else {
+    if (currentBlockType === PARAGRAPH_STYLES.Section) {
+      Transforms.unwrapNodes(editor, {
+        at: editor.selection as any,
+        match: (n: any) => {
+          return n.type === PARAGRAPH_STYLES.Section;
+        },
+      });
+    } else {
+      Transforms.setNodes(
+        editor,
+        {
+          type: changeTo,
+        },
+        {
+          at: editor.selection as any,
+          match: (n) => Editor.isBlock(editor, n),
+        }
+      );
     }
-  );
-}
+  }
+};

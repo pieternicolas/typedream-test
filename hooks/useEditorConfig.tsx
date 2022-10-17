@@ -6,41 +6,48 @@ import {
   RenderLeafProps,
 } from 'slate-react';
 
-import { KEYBINDINGS } from 'containers/Editor/constants';
+import { KEYBINDINGS, PARAGRAPH_STYLES } from 'containers/Editor/constants';
 
 const renderElement = (props: RenderElementProps) => {
   const { element, children, attributes } = props;
 
   switch (element.type) {
-    case 'paragraph':
+    case PARAGRAPH_STYLES.Paragraph:
       return <p {...attributes}>{children}</p>;
 
-    case 'h1':
+    case PARAGRAPH_STYLES.H1:
       return (
         <h1 className="text-3xl" {...attributes}>
           {children}
         </h1>
       );
 
-    case 'h2':
+    case PARAGRAPH_STYLES.H2:
       return (
         <h2 className="text-2xl" {...attributes}>
           {children}
         </h2>
       );
 
-    case 'h3':
+    case PARAGRAPH_STYLES.H3:
       return (
         <h3 className="text-xl" {...attributes}>
           {children}
         </h3>
       );
 
-    case 'h4':
+    case PARAGRAPH_STYLES.H4:
       return (
         <h4 className="text-lg" {...attributes}>
           {children}
         </h4>
+      );
+
+    case PARAGRAPH_STYLES.Section:
+      return (
+        <div className="mb-2 p-2 border" {...attributes}>
+          {children}
+        </div>
       );
 
     default:

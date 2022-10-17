@@ -7,7 +7,11 @@ import Div from 'components/Div';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 
-import { CHARACTER_STYLES, PARAGRAPH_STYLES } from './constants';
+import {
+  CHARACTER_STYLES,
+  PARAGRAPH_STYLES,
+  PARAGRAPH_STYLES_ARR,
+} from './constants';
 import {
   getActiveStyles,
   getTextBlockStyle,
@@ -24,7 +28,7 @@ const Toolbar: FC<ToolbarProps> = ({}) => {
 
   const onBlockTypeChange = useCallback(
     (targetType: string) => {
-      if (targetType === 'multiple') {
+      if (targetType === PARAGRAPH_STYLES.Multiple) {
         return;
       }
       toggleBlockType(editor, targetType);
@@ -37,7 +41,7 @@ const Toolbar: FC<ToolbarProps> = ({}) => {
   return (
     <>
       <Div className="flex gap-4 justify-center py-4 mb-4 border-b sticky top-0 bg-white z-10">
-        {PARAGRAPH_STYLES.map((item) => (
+        {PARAGRAPH_STYLES_ARR.map((item) => (
           <Button
             key={item}
             className={clsx(

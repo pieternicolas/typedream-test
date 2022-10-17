@@ -5,14 +5,17 @@ import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 
 import { toggleStyle } from './utils';
 
-export const PARAGRAPH_STYLES = [
-  'h1',
-  'h2',
-  'h3',
-  'h4',
-  'paragraph',
-  'multiple',
-] as const;
+export enum PARAGRAPH_STYLES {
+  H1 = 'h1',
+  H2 = 'h2',
+  H3 = 'h3',
+  H4 = 'h4',
+  Paragraph = 'paragraph',
+  Multiple = 'multiple',
+  Section = 'section',
+}
+
+export const PARAGRAPH_STYLES_ARR = Object.values(PARAGRAPH_STYLES);
 
 export const CHARACTER_STYLES = [
   { name: 'bold', icon: solid('bold') },
@@ -47,19 +50,19 @@ export const KEYBINDINGS = {
 
 export const initialValue: Descendant[] = [
   {
-    type: 'paragraph',
+    type: PARAGRAPH_STYLES.Paragraph,
     children: [{ text: 'A line of text in a paragraph.' }],
   },
   {
-    type: 'h1',
+    type: PARAGRAPH_STYLES.H1,
     children: [{ text: 'Heading 1' }],
   },
   {
-    type: 'h2',
+    type: PARAGRAPH_STYLES.H2,
     children: [{ text: 'Heading 2' }],
   },
   {
-    type: 'paragraph',
+    type: PARAGRAPH_STYLES.Paragraph,
     children: [
       { text: 'Hello World! This is my paragraph inside a sample document.' },
       { text: 'Bold text.', bold: true, code: true },
