@@ -1,7 +1,9 @@
 import { FC, HTMLAttributes, useMemo } from 'react';
 import clsx from 'clsx';
 
-type ButtonProps = HTMLAttributes<HTMLButtonElement> & {};
+type ButtonProps = HTMLAttributes<HTMLButtonElement> & {
+  disabled?: boolean;
+};
 
 const Button: FC<ButtonProps> = ({ className, children, ...props }) => {
   const classes = useMemo(

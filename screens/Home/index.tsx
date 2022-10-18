@@ -1,8 +1,6 @@
 import { FC } from 'react';
 import { Descendant } from 'slate';
 
-import Div from 'components/Div';
-
 import Editor from 'containers/Editor';
 import { initialValue } from 'containers/Editor/constants';
 
@@ -15,14 +13,14 @@ const Home: FC = () => {
 
   return (
     <>
-      <Div className="w-full h-full min-h-screen bg-gray-300">
-        <Div className="container mx-auto p-6 bg-white h-full drop-shadow">
+      <div className="w-full h-full min-h-screen bg-gray-300">
+        <div className="container mx-auto p-6 bg-white h-full drop-shadow">
           <Editor
             value={editorValue}
             onChange={throttle((value: Descendant[]) => setEditorValue(value))}
           />
-        </Div>
-      </Div>
+        </div>
+      </div>
     </>
   );
 };

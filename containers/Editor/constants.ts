@@ -13,9 +13,12 @@ export enum PARAGRAPH_STYLES {
   Paragraph = 'paragraph',
   Multiple = 'multiple',
   Section = 'section',
+  Link = 'link',
 }
 
-export const PARAGRAPH_STYLES_ARR = Object.values(PARAGRAPH_STYLES);
+export const PARAGRAPH_STYLES_ARR = Object.values(PARAGRAPH_STYLES).filter(
+  (item) => item !== PARAGRAPH_STYLES.Link
+);
 
 export const CHARACTER_STYLES = [
   { name: 'bold', icon: solid('bold') },
@@ -69,6 +72,14 @@ export const initialValue: Descendant[] = [
       { text: 'Italic text.', italic: true },
       { text: 'Bold and underlined text.', bold: true, underline: true },
       { text: 'variableFoo', code: true },
+    ],
+  },
+  {
+    type: PARAGRAPH_STYLES.Link,
+    url: 'https://www.google.com',
+    children: [
+      { text: 'Link text' },
+      { text: 'Bold text inside link', bold: true },
     ],
   },
 ];

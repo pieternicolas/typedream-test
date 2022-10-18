@@ -1,10 +1,9 @@
 import { FC, useCallback } from 'react';
-import { BaseRange } from 'slate';
+import { BaseSelection } from 'slate';
 import { useSlateStatic } from 'slate-react';
 import clsx from 'clsx';
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 
-import Div from 'components/Div';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 
@@ -18,16 +17,18 @@ import {
 import {
   getActiveStyles,
   getTextBlockStyle,
-  resetDocument,
+  isLinkNodeAtSelection,
   toggleBlockType,
+  toggleLinkAtSelection,
   toggleStyle,
 } from './utils';
 
 type ToolbarProps = {
-  selection?: BaseRange | null;
+  selection: BaseSelection;
+  handleOnReset?: () => void;
 };
 
-const Toolbar: FC<ToolbarProps> = () => {
+const Toolbar: FC<ToolbarProps> = ({ selection, handleOnReset }) => {
   const editor = useSlateStatic();
 
   const onResetClick = () => {
@@ -36,7 +37,7 @@ const Toolbar: FC<ToolbarProps> = () => {
       confirmButtonText: 'Yes',
     }).then((res) => {
       if (res.isConfirmed) {
-        resetDocument(editor);
+        handleOnReset?.();
       }
     });
   };
@@ -55,7 +56,7 @@ const Toolbar: FC<ToolbarProps> = () => {
 
   return (
     <>
-      <Div className="flex gap-4 justify-center py-4 mb-4 border-b sticky top-0 bg-white z-10">
+      <div className="flex gap-4 justify-center py-4 mb-4 border-b sticky top-0 bg-white z-10">
         {PARAGRAPH_STYLES_ARR.map((item) => (
           <Button
             key={item}
@@ -87,12 +88,21 @@ const Toolbar: FC<ToolbarProps> = () => {
         ))}
 
         <Button
+          className={clsx({
+            '!bg-gray-300': isLinkNodeAtSelection(editor, selection),
+          })}
+          onMouseDown={() => toggleLinkAtSelection(editor, selection)}
+        >
+          <Icon icon={solid('link')} />
+        </Button>
+
+        <Button
           className="bg-rose-500 border-rose-500 hover:border-gray-400"
           onClick={onResetClick}
         >
           <Icon icon={solid('trash')} />
         </Button>
-      </Div>
+      </div>
     </>
   );
 };

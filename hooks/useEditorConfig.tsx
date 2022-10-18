@@ -50,6 +50,17 @@ const renderElement = (props: RenderElementProps) => {
         </div>
       );
 
+    case PARAGRAPH_STYLES.Link:
+      return (
+        <a
+          href={element.url}
+          className="underline text-blue-500"
+          {...attributes}
+        >
+          {children}
+        </a>
+      );
+
     default:
       return <DefaultElement {...props} />;
   }
@@ -83,6 +94,8 @@ const useEditorConfig = (editor: Editor) => {
       KEYBINDINGS.onKeyDown(editor, event),
     [editor]
   );
+
+  editor.isInline = (element) => ['link'].includes(element.type);
 
   return { renderElement, renderLeaf, onKeyDown };
 };
