@@ -2,10 +2,13 @@ import { FC, useCallback } from 'react';
 import { BaseRange } from 'slate';
 import { useSlateStatic } from 'slate-react';
 import clsx from 'clsx';
+import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 
 import Div from 'components/Div';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
+
+import Popup from 'helpers/popup';
 
 import {
   CHARACTER_STYLES,
@@ -15,6 +18,7 @@ import {
 import {
   getActiveStyles,
   getTextBlockStyle,
+  resetDocument,
   toggleBlockType,
   toggleStyle,
 } from './utils';
@@ -23,8 +27,19 @@ type ToolbarProps = {
   selection?: BaseRange | null;
 };
 
-const Toolbar: FC<ToolbarProps> = ({}) => {
+const Toolbar: FC<ToolbarProps> = () => {
   const editor = useSlateStatic();
+
+  const onResetClick = () => {
+    Popup.fire({
+      title: <p>Reset to default state?</p>,
+      confirmButtonText: 'Yes',
+    }).then((res) => {
+      if (res.isConfirmed) {
+        resetDocument(editor);
+      }
+    });
+  };
 
   const onBlockTypeChange = useCallback(
     (targetType: string) => {
@@ -70,6 +85,13 @@ const Toolbar: FC<ToolbarProps> = ({}) => {
             <Icon icon={item.icon} />
           </Button>
         ))}
+
+        <Button
+          className="bg-rose-500 border-rose-500 hover:border-gray-400"
+          onClick={onResetClick}
+        >
+          <Icon icon={solid('trash')} />
+        </Button>
       </Div>
     </>
   );

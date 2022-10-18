@@ -1,6 +1,6 @@
 import { Editor, Range, Transforms } from 'slate';
 
-import { PARAGRAPH_STYLES } from './constants';
+import { initialValue, PARAGRAPH_STYLES } from './constants';
 
 export const getActiveStyles = (editor: Editor) => {
   return new Set(Object.keys(Editor.marks(editor) ?? {}));
@@ -81,4 +81,24 @@ export const toggleBlockType = (editor: Editor, blockType: string) => {
       );
     }
   }
+};
+
+export const resetDocument = (editor: Editor) => {
+  const totalNodes = editor.children.length;
+
+  for (let i = 0; i < totalNodes - 1; i++) {
+    Transforms.removeNodes(editor, {
+      at: [totalNodes - i - 1],
+    });
+  }
+
+  for (const value of initialValue) {
+    Transforms.insertNodes(editor, value, {
+      at: [editor.children.length],
+    });
+  }
+
+  Transforms.removeNodes(editor, {
+    at: [0],
+  });
 };

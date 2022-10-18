@@ -3,11 +3,12 @@ import { createEditor, Descendant } from 'slate';
 import { Editable, Slate, withReact } from 'slate-react';
 import { withHistory } from 'slate-history';
 
+import Div from 'components/Div';
+
 import useEditorConfig from 'hooks/useEditorConfig';
 import useEditorSelection from 'hooks/useEditorSelection';
 
 import Toolbar from './Toolbar';
-import Div from 'components/Div';
 
 export interface EditorProps
   extends Omit<ComponentProps<typeof Slate>, 'editor' | 'children'> {}
